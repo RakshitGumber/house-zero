@@ -7,3 +7,4 @@
 - Do not invoke the `writing-plans` skill in this repository unless the user explicitly asks for an implementation plan.
 - Do not create `docs/superpowers`, implementation-plan files, or spec files as workflow artifacts unless the user explicitly requests them.
 - Work directly on requested implementation tasks and keep progress notes in the conversation.
+- Do not rebuild after every command or small edit. Batch changes and run a build only once for final verification when the task warrants it.
