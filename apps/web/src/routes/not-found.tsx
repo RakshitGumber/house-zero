@@ -15,7 +15,7 @@ export function NotFoundPage() {
         </p>
         <Link
           to="/"
-          className="mt-8 inline-block bg-white px-5 py-3 font-bold text-slate-950"
+          className="mt-8 inline-block bg-primary px-5 py-3 font-bold text-primary-foreground"
         >
           Return home
         </Link>

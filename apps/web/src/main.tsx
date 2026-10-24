@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
 import "@fontsource/lato/400.css";
 import "@fontsource/lato/700.css";
-import "@fontsource-variable/cascadia-mono";
+import "@fontsource-variable/sora";
 
 import "@/index.css";
 import { router } from "@/router";

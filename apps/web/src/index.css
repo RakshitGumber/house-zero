@@ -2,23 +2,34 @@
 
 @theme {
   --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Cascadia Mono Variable", "Cascadia Mono", ui-monospace,
-    monospace;
-  --color-background: #020305;
-  --color-foreground: #f0f1f2;
-  --color-border: rgb(240 241 242 / 13%);
-  --color-primary: #8892ff;
-  --color-primary-foreground: var(--color-background);
+  --font-heading: "Sora Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: #f5f6fa;
+  --color-foreground: #202235;
+  --color-card: #ffffff;
+  --color-card-foreground: #202235;
+  --color-muted: #e9eaf2;
+  --color-muted-foreground: #4f5266;
+  --color-border: #d7d9e5;
+  --color-primary: #5b5bd6;
+  --color-primary-foreground: #ffffff;
+  --color-accent: #e4e5ff;
+  --color-accent-foreground: #343493;
 }
 
 @layer base {
+  html {
+    color-scheme: light;
+  }
+
   body {
     font-family: var(--font-sans);
     background: var(--color-background);
     color: var(--color-foreground);
-    scrollbar-color: var(--color-primary) var(--color-background);
-    scrollbar-width: thin;
+    text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    scrollbar-color: var(--color-primary) var(--color-muted);
+    scrollbar-width: thin;
   }
 
   h1,
@@ -27,12 +38,12 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-sans);
+    font-family: var(--font-heading);
   }
 
   ::selection {
-    background: color-mix(in srgb, var(--color-primary) 76%, black);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-accent-foreground);
   }
 
   :focus-visible {

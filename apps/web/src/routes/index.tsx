@@ -13,7 +13,7 @@ export const indexRoute = createRoute({
 
 function LandingPage() {
   return (
-    <div className="min-h-svh bg-white">
+    <div className="min-h-svh bg-background">
       <Headline />
       <Navbar />
       <Hero />

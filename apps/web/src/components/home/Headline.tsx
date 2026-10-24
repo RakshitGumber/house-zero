@@ -1,6 +1,6 @@
 export function Headline() {
   return (
-    <aside className="bg-sky-400 px-4 py-3 text-center text-sm font-bold text-slate-950">
+    <aside className="bg-primary px-4 py-3 text-center text-sm font-bold text-primary-foreground">
       A new home for System One models is taking shape.
     </aside>
   );
