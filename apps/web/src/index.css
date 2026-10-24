@@ -4,6 +4,8 @@
   --color-background: #020305;
   --color-foreground: #f0f1f2;
   --color-border: rgb(240 241 242 / 13%);
+  --color-primary: #8892ff;
+  --color-primary-foreground: var(--color-background);
   --animate-reveal-image: reveal-image 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-orbit-pulse: orbit-pulse 8s ease-in-out infinite alternate;
 
