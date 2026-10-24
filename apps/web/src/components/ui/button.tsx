@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
+import { clsx } from "clsx";
 
 type ButtonVariant = "default" | "outline" | "ghost";
 type ButtonSize = "default" | "sm" | "lg" | "icon";
@@ -25,7 +24,7 @@ type ButtonVariantProps = {
 };
 
 function buttonVariants({ variant = "default", size = "default", className }: ButtonVariantProps = {}) {
-  return cn(
+  return clsx(
     "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
     variants[variant],
     sizes[size],
@@ -39,7 +38,7 @@ function Button({ className, variant, size, asChild = false, children, ...props 
   if (asChild && React.isValidElement(children)) {
     const child = React.Children.only(children) as React.ReactElement<{ className?: string }>;
     return React.cloneElement(child, {
-      className: cn(styles, child.props.className),
+      className: clsx(styles, child.props.className),
     });
   }
 
