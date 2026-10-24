@@ -1,7 +1,5 @@
 import { Link } from "@tanstack/react-router";
 
-import { Button } from "@/components/ui/button";
-
 export function NotFoundPage() {
   return (
     <main className="grid min-h-screen place-items-center px-6 text-center">
@@ -15,9 +13,12 @@ export function NotFoundPage() {
         <p className="mx-auto mt-4 max-w-md text-muted-foreground">
           The page you are looking for has moved or never existed.
         </p>
-        <Button className="mt-8">
-          <Link to="/">Return home</Link>
-        </Button>
+        <Link
+          to="/"
+          className="mt-8 inline-block bg-white px-5 py-3 font-bold text-slate-950"
+        >
+          Return home
+        </Link>
       </div>
     </main>
   );

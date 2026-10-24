@@ -1,6 +1,6 @@
 # House Zero
 
-A Bun monorepo with a React landing page powered by Vite, Tailwind CSS, shadcn/ui conventions, and TanStack Router.
+A Bun monorepo with a React landing page powered by Vite, Tailwind CSS, and TanStack Router.
 
 ## Getting started
 
@@ -25,7 +25,7 @@ bun run build      # Create a production build
 apps/
   web/
     src/
-      components/ui/  Reusable shadcn-style primitives
+      components/     Reusable React components
       routes/         TanStack Router route components
       lib/            Shared application utilities
 ```
