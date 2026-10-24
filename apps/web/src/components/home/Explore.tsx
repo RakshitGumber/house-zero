@@ -59,13 +59,13 @@ export function ExploreSection() {
   // viewport while the world turns around the viewer.
   const stageRotationTarget = useTransform(
     scrollYProgress,
-    [0, 0.1, 0.7, 1],
+    [0, 0.08, 0.82, 1],
     [0, 0, 180, 180],
   );
   const stageRotateY = useSpring(stageRotationTarget, {
-    stiffness: 82,
-    damping: 24,
-    mass: 0.42,
+    stiffness: 64,
+    damping: 22,
+    mass: 0.5,
   });
   const reducedFrontOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [1, 1, 0, 0]);
   const reducedBackOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [0, 0, 1, 1]);
@@ -101,11 +101,11 @@ export function ExploreSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[360svh] bg-black"
+      className="relative h-[500svh] bg-black"
       id="top"
       aria-labelledby="hero-title"
     >
-      <div id="models" className="pointer-events-none absolute top-[238svh]" />
+      <div id="models" className="pointer-events-none absolute top-[370svh]" />
 
       <div
         className="sticky top-0 h-svh overflow-hidden bg-[#01040b]"
@@ -137,7 +137,7 @@ export function ExploreSection() {
                 transform: "translateZ(0)",
               }}
             >
-              <div className="absolute inset-y-0 left-[60vw] w-screen overflow-hidden">
+              <div className="absolute inset-y-0 left-[60vw] w-screen">
               <motion.div
                 className="absolute inset-0"
                 style={{
