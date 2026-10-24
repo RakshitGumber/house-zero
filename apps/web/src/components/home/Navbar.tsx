@@ -1,6 +1,6 @@
 export function Navbar() {
   return (
-    <header className="bg-white text-slate-950">
+    <header className="border-b-2 border-dashed border-sky-100 bg-white text-slate-950">
       <nav
         aria-label="Primary navigation"
         className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
