@@ -14,6 +14,11 @@
 @layer base {
   body {
     font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    scrollbar-color: var(--color-primary) var(--color-background);
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
   }
 
   h1,
@@ -22,11 +27,22 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
   }
 
-  *:focus,
-  *:focus-visible {
-    outline: none;
+  ::selection {
+    background: color-mix(in srgb, var(--color-primary) 76%, black);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }

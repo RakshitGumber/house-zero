@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "project": {
+    "name": "house-zero",
+    "productType": "public AI research lab landing page",
+    "stack": ["React 19", "TypeScript", "Tailwind CSS 4", "Framer Motion", "Three.js", "React Three Fiber"]
+  },
+  "sources": {
+    "tokens": [],
+    "components": [],
+    "assets": ["apps/web/public/images/telescope-cutout.png"],
+    "instructions": [
+      "PRODUCT.md",
+      "AGENTS.md"
+    ]
+  },
+  "design": {
+    "colorMode": "dark",
+    "colors": {
+      "background": "#020305",
+      "foreground": "#f0f1f2",
+      "primary": "#8892ff"
+    },
+    "typography": {
+      "sans": "Lato",
+      "mono": "Cascadia Mono Variable"
+    },
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {
+      "signature": "scroll-driven two-sided cinematic chamber"
+    },
+    "density": "immersive"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": ["sticky perspective chamber", "semantic DOM over one WebGL canvas", "reduced-motion static journey"]
+  },
+  "constraints": {
+    "must": [
+      "Keep and improve the cinematic chamber",
+      "Present House Zero as a public AI research lab",
+      "Use black, white, and violet",
+      "Keep copy accessible above the WebGL canvas"
+    ],
+    "avoid": [
+      "Generic starfields",
+      "Visible dot-particle Earth",
+      "Repository-card metaphor",
+      "Positioning House Zero as a System One library",
+      "Claims about third-party models or fabricated activity"
+    ]
+  },
+  "decisions": [
+    {
+      "decision": "Preserve the existing two-sided perspective chamber and improve its pacing, depth, lighting, and scene continuity.",
+      "references": ["Globe Pulse", "Living Nebula", "Quantum Nebula", "Halftone Nebula", "Milky Way", "Entropy", "Neural Noise"]
+    },
+    {
+      "decision": "Use a solid layered intelligence planet and an open research map instead of a particle Earth or repository directory."
+    }
+  ],
+  "evidence": [
+    {
+      "fact": "project.instructions",
+      "source": "AGENTS.md"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "PRODUCT.md"
+    }
+  ],
+  "generatedAt": "2026-10-24T15:07:22.021Z"
+}

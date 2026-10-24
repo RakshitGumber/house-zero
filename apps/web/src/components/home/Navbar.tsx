@@ -8,7 +8,7 @@ export function Navbar() {
     >
       <a
         className="text-sm font-semibold tracking-[.34em] text-foreground no-underline max-sm:text-xs"
-        href="#top"
+        href="#universe"
         aria-label="House Zero home"
       >
         HOUSE <span className="text-primary">ZERO</span>
@@ -20,29 +20,29 @@ export function Navbar() {
       >
         <a
           className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
-          href="#models"
+          href="#planet"
         >
-          Models
+          Research map
         </a>
         <a
           className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
-          href="#models"
+          href="#open-research"
         >
-          Harnesses
+          Open research
         </a>
         <a
           className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
-          href="#models"
+          href="#galaxy"
         >
-          Memory
+          Universe
         </a>
       </nav>
 
       <a
         className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground max-sm:text-xs"
-        href="#models"
+        href="#planet"
       >
-        Explore
+        Dive in
         <Icon aria-hidden="true" icon="solar:arrow-right-up-linear" width={16} />
       </a>
     </header>

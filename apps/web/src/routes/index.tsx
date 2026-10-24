@@ -1,7 +1,7 @@
 import { createRoute } from "@tanstack/react-router";
 
-import { ExploreSection } from "@/components/home/Explore";
 import { Navbar } from "@/components/home/Navbar";
+import { LeanJourney } from "@/components/home/LeanJourney";
 import { rootRoute } from "@/routes/__root";
 
 export const indexRoute = createRoute({
@@ -14,7 +14,7 @@ function LandingPage() {
   return (
     <main className="min-h-svh bg-background">
       <Navbar />
-      <ExploreSection />
+      <LeanJourney />
     </main>
   );
 }
