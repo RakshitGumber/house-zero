@@ -8,26 +8,8 @@ type Particle = {
   land: boolean;
 };
 
-type Star = {
-  x: number;
-  y: number;
-  size: number;
-  alpha: number;
-};
-
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 const PARTICLE_COUNT = 1900;
-
-function fractional(value: number) {
-  return value - Math.floor(value);
-}
-
-const stars: Star[] = Array.from({ length: 170 }, (_, index) => ({
-  x: fractional(Math.sin(index * 91.371 + 0.17) * 43_758.5453),
-  y: fractional(Math.sin(index * 47.853 + 1.31) * 24_634.6345),
-  size: 0.35 + fractional(Math.sin(index * 17.147) * 9_731.123) * 1.05,
-  alpha: 0.08 + fractional(Math.sin(index * 63.731) * 5_123.341) * 0.3,
-}));
 
 function longitudeDistance(a: number, b: number) {
   const distance = Math.abs(a - b) % 360;
@@ -129,13 +111,6 @@ export function ParticleEarth({ scrollProgress }: ParticleEarthProps) {
 
     const draw = () => {
       context.clearRect(0, 0, width, height);
-
-      for (const star of stars) {
-        context.beginPath();
-        context.arc(star.x * width, star.y * height, star.size, 0, Math.PI * 2);
-        context.fillStyle = `rgb(240 241 242 / ${star.alpha})`;
-        context.fill();
-      }
 
       const compact = width < 720;
       const particleLimit = compact ? 1100 : PARTICLE_COUNT;

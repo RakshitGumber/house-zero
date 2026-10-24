@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
 import { ParticleEarth } from "@/components/home/ParticleEarth";
+import { StarField } from "@/components/home/StarField";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 const rotatingWords = ["harness", "model", "memory"] as const;
@@ -104,25 +105,39 @@ export function ExploreSection() {
       <div id="models" className="pointer-events-none absolute top-[238svh]" />
 
       <div
-        className="sticky top-0 h-svh overflow-hidden bg-black"
+        className="sticky top-0 h-svh overflow-hidden bg-[#01040b]"
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
       >
+        <StarField scrollProgress={scrollYProgress} />
+
         <motion.div
           className="absolute inset-y-0 left-0 flex w-[200vw] will-change-transform"
           style={{ x: trackX }}
         >
-          <div className="relative h-svh w-screen shrink-0 overflow-hidden bg-black">
-            <motion.img
-              className="absolute inset-0 size-full object-contain object-left-center"
-              style={{
-                x: reduceMotion ? 0 : telescopeParallax,
-                y: reduceMotion ? 0 : scenePointerY,
-                filter: "saturate(.74) contrast(1.08) brightness(.72)",
-              }}
-              src="/images/telescope-hero-wide.png"
-              alt=""
-            />
+          <div className="relative h-svh w-screen shrink-0 overflow-visible">
+            <motion.div
+              className="absolute inset-0"
+              style={{ x: reduceMotion ? 0 : telescopeParallax }}
+            >
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  x: reduceMotion ? 0 : scenePointerX,
+                  y: reduceMotion ? 0 : scenePointerY,
+                }}
+              >
+                <img
+                  className="absolute left-[-4vw] top-1/2 w-[165vw] max-w-none -translate-y-[35%] object-contain max-md:left-[-72vw] max-md:w-[285vw] max-md:-translate-y-[40%]"
+                  style={{
+                    filter:
+                      "saturate(.82) contrast(1.08) brightness(.78) drop-shadow(0 0 14px rgb(167 108 255 / .48)) drop-shadow(0 0 38px rgb(124 58 237 / .28))",
+                  }}
+                  src="/images/telescope-cutout.png"
+                  alt=""
+                />
+              </motion.div>
+            </motion.div>
 
             <h1
               className="absolute left-8 top-20 z-[2] m-0 whitespace-nowrap text-[clamp(2rem,6.8vw,6.5rem)] font-normal leading-[1.08] tracking-[-.02em] text-foreground/95 max-md:left-5 max-md:top-16"
@@ -164,7 +179,7 @@ export function ExploreSection() {
             </p>
           </div>
 
-          <div className="relative h-svh w-screen shrink-0 overflow-hidden bg-black">
+          <div className="relative h-svh w-screen shrink-0 overflow-hidden">
             <motion.div
               className="absolute inset-0"
               style={{
