@@ -1,6 +1,9 @@
+import { Icon } from "@iconify/react";
 import { clsx } from "clsx";
-import { ArrowDownLeft } from "lucide-react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { useState, type PointerEvent } from "react";
+
+const easeOut = [0.16, 1, 0.3, 1] as const;
 
 const models = [
   {
@@ -26,73 +29,103 @@ const models = [
 type ModelId = (typeof models)[number]["id"];
 type ModelPosition = (typeof models)[number]["position"];
 
-const mediaStateClasses: Record<ModelPosition, string> = {
-  near: "object-[51%_center] [filter:saturate(.74)_contrast(1.08)_brightness(.76)]",
-  middle:
-    "object-[55%_center] [filter:saturate(.82)_contrast(1.1)_brightness(.8)]",
-  far: "object-[59%_center] [filter:saturate(.9)_contrast(1.06)_brightness(.84)]",
+const mediaStates: Record<ModelPosition, { filter: string; objectPosition: string }> = {
+  near: {
+    filter: "saturate(.74) contrast(1.08) brightness(.76)",
+    objectPosition: "51% center",
+  },
+  middle: {
+    filter: "saturate(.82) contrast(1.1) brightness(.8)",
+    objectPosition: "55% center",
+  },
+  far: {
+    filter: "saturate(.9) contrast(1.06) brightness(.84)",
+    objectPosition: "59% center",
+  },
 };
 
-const orbitStateClasses: Record<ModelPosition, string> = {
-  near: "left-[80%] top-[51%]",
-  middle: "left-[66%] top-[57%]",
-  far: "left-[47%] top-[64%]",
+const orbitStates: Record<ModelPosition, { left: string; top: string }> = {
+  near: { left: "80%", top: "51%" },
+  middle: { left: "66%", top: "57%" },
+  far: { left: "47%", top: "64%" },
 };
 
-const focusStateClasses: Record<ModelPosition, string> = {
-  near: "left-[81%] top-1/2",
-  middle: "left-[61%] top-[61%]",
-  far: "left-[35%] top-[72%]",
+const focusStates: Record<ModelPosition, { left: string; top: string }> = {
+  near: { left: "81%", top: "50%" },
+  middle: { left: "61%", top: "61%" },
+  far: { left: "35%", top: "72%" },
 };
 
 export function HeroSection() {
   const [active, setActive] = useState<ModelId>("jev");
   const current = models.find((model) => model.id === active) ?? models[0];
+  const reduceMotion = useReducedMotion();
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const imageX = useSpring(pointerX, { damping: 24, stiffness: 90 });
+  const imageY = useSpring(pointerY, { damping: 24, stiffness: 90 });
 
   function handlePointerMove(event: PointerEvent<HTMLElement>) {
+    if (reduceMotion) return;
+
     const rect = event.currentTarget.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-    event.currentTarget.style.setProperty("--mx", `${x * -18}px`);
-    event.currentTarget.style.setProperty("--my", `${y * -12}px`);
+    pointerX.set(x * -18);
+    pointerY.set(y * -12);
   }
 
   return (
     <section
-      className="relative isolate min-h-svh overflow-hidden bg-background [--ease:cubic-bezier(0.16,1,0.3,1)] [--mx:0] [--my:0]"
+      className="relative isolate min-h-svh overflow-hidden bg-background"
       id="top"
       aria-labelledby="hero-title"
       onPointerMove={handlePointerMove}
     >
-      <div
-        className="absolute -inset-6 z-[-4] overflow-hidden motion-safe:animate-reveal-image"
+      <motion.div
+        className="absolute -inset-6 z-[-4] overflow-hidden"
+        initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)", opacity: 0.2 }}
+        animate={{ clipPath: "inset(0 0 0% 0)", opacity: 1 }}
+        transition={{ duration: reduceMotion ? 0 : 1.2, ease: easeOut }}
         aria-hidden="true"
       >
-        <img
-          className={clsx(
-            "size-full object-cover [transform:translate(var(--mx),var(--my))_scale(1.025)] [transition:transform_1.1s_var(--ease),object-position_1.2s_var(--ease),filter_.8s_ease] motion-reduce:transition-none max-md:object-[62%_center] max-sm:object-[65%_center] max-sm:[filter:saturate(.7)_contrast(1.08)_brightness(.65)]",
-            mediaStateClasses[current.position],
-          )}
+        <motion.img
+          className="size-full object-cover max-md:!object-[62%_center] max-sm:!object-[65%_center] max-sm:![filter:saturate(.7)_contrast(1.08)_brightness(.65)]"
+          style={{ x: imageX, y: imageY, scale: 1.025 }}
+          animate={mediaStates[current.position]}
+          transition={{
+            filter: { duration: reduceMotion ? 0 : 0.8, ease: "easeInOut" },
+            objectPosition: { duration: reduceMotion ? 0 : 1.2, ease: easeOut },
+          }}
           src="/images/telescope-hero.png"
           alt=""
         />
-      </div>
+      </motion.div>
       <div
         className="pointer-events-none absolute inset-0 z-[-3] bg-[linear-gradient(180deg,color-mix(in_srgb,var(--color-background)_50%,transparent)_0%,transparent_25%,transparent_66%,color-mix(in_srgb,var(--color-background)_58%,transparent)_100%),linear-gradient(90deg,color-mix(in_srgb,var(--color-background)_37%,transparent)_0%,transparent_35%,transparent_78%,color-mix(in_srgb,var(--color-background)_25%,transparent)_100%)]"
         aria-hidden="true"
       />
-      <div
-        className={clsx(
-          "pointer-events-none absolute z-[-1] aspect-square w-[54vw] max-w-205 -translate-x-1/2 -translate-y-1/2 rotate-[-16deg] rounded-full border border-primary/20 [transition:left_1s_var(--ease),top_1s_var(--ease),opacity_.6s_ease] motion-safe:animate-orbit-pulse motion-reduce:transition-none max-md:left-[73%] max-md:top-[55%] max-md:w-screen",
-          orbitStateClasses[current.position],
-        )}
+      <motion.div
+        className="pointer-events-none absolute z-[-1] aspect-square w-[54vw] max-w-205 rounded-full border border-primary/20 max-md:!left-[73%] max-md:!top-[55%] max-md:w-screen"
+        style={{ x: "-50%", y: "-50%", rotate: -16 }}
+        animate={{
+          ...orbitStates[current.position],
+          opacity: reduceMotion ? 0.72 : [0.45, 1, 0.45],
+          scale: reduceMotion ? 1 : [0.98, 1.02, 0.98],
+        }}
+        transition={{
+          left: { duration: reduceMotion ? 0 : 1, ease: easeOut },
+          top: { duration: reduceMotion ? 0 : 1, ease: easeOut },
+          opacity: { duration: reduceMotion ? 0 : 8, ease: "easeInOut", repeat: reduceMotion ? 0 : Infinity },
+          scale: { duration: reduceMotion ? 0 : 8, ease: "easeInOut", repeat: reduceMotion ? 0 : Infinity },
+        }}
         aria-hidden="true"
       />
-      <div
-        className={clsx(
-          "pointer-events-none absolute z-[-1] aspect-square w-[40vw] max-w-152 -translate-x-1/2 -translate-y-1/2 rotate-[-16deg] rounded-full border border-foreground/10 [transition:left_1s_var(--ease),top_1s_var(--ease),opacity_.6s_ease] motion-reduce:transition-none max-md:left-[73%] max-md:top-[55%] max-md:w-[74vw]",
-          orbitStateClasses[current.position],
-        )}
+      <motion.div
+        className="pointer-events-none absolute z-[-1] aspect-square w-[40vw] max-w-152 rounded-full border border-foreground/10 max-md:!left-[73%] max-md:!top-[55%] max-md:w-[74vw]"
+        style={{ x: "-50%", y: "-50%", rotate: -16 }}
+        animate={orbitStates[current.position]}
+        transition={{ duration: reduceMotion ? 0 : 1, ease: easeOut }}
         aria-hidden="true"
       />
 
@@ -104,29 +137,30 @@ export function HeroSection() {
         <span className="text-foreground/90 max-md:block max-md:w-max max-md:max-w-full max-md:self-end max-md:text-left">ONE</span>
       </h1>
 
-      <div
-        className={clsx(
-          "absolute z-[7] flex items-center gap-3 text-foreground [transition:top_1s_var(--ease),left_1s_var(--ease)] motion-reduce:transition-none max-md:left-[69%] max-md:top-[56%] max-sm:left-[68%] max-sm:top-[53%]",
-          focusStateClasses[current.position],
-        )}
+      <motion.div
+        className="absolute z-[7] flex items-center gap-3 text-foreground max-md:!left-[69%] max-md:!top-[56%] max-sm:!left-[68%] max-sm:!top-[53%]"
+        animate={focusStates[current.position]}
+        transition={{ duration: reduceMotion ? 0 : 1, ease: easeOut }}
         aria-hidden="true"
       >
         <span className="relative block size-7 rounded-full border border-foreground/55 before:absolute before:left-1/2 before:top-1/2 before:h-px before:w-2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-foreground before:content-[''] after:absolute after:left-1/2 after:top-1/2 after:h-2 after:w-px after:-translate-x-1/2 after:-translate-y-1/2 after:bg-foreground after:content-['']" />
         <span className="text-sm font-semibold tracking-[.08em]">{current.name}</span>
-      </div>
+      </motion.div>
 
       <div className="absolute bottom-15 left-8 z-[8] w-88 max-md:bottom-36 max-md:left-5 max-md:right-5 max-md:w-auto">
         <p className="m-0 text-lg font-medium leading-relaxed tracking-[-.01em] max-md:max-w-[34ch]">
           A home for a new class of AI. Discover System One models, then run
           them yourself or through House Zero.
         </p>
-        <a
-          className="mt-7 inline-flex w-62 items-center justify-between rounded-sm bg-foreground px-4 py-4 text-xs font-semibold uppercase tracking-[.04em] text-background no-underline transition-colors duration-200 hover:bg-primary hover:text-primary-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground max-md:mt-5 max-md:w-55"
+        <motion.a
+          className="mt-7 inline-flex w-62 items-center justify-between rounded-sm bg-foreground px-4 py-4 text-xs font-semibold uppercase tracking-[.04em] text-background no-underline max-md:mt-5 max-md:w-55"
+          whileHover={{ backgroundColor: "var(--color-primary)", color: "var(--color-primary-foreground)" }}
+          transition={{ duration: 0.2 }}
           href="#models"
         >
           Enter the observatory
-          <ArrowDownLeft aria-hidden="true" size={15} strokeWidth={1.5} />
-        </a>
+          <Icon aria-hidden="true" icon="solar:arrow-left-down-linear" width={15} />
+        </motion.a>
       </div>
 
       <div
@@ -148,26 +182,33 @@ export function HeroSection() {
             const isActive = model.id === active;
 
             return (
-              <button
+              <motion.button
                 key={model.id}
                 type="button"
                 className={clsx(
-                  "inline-flex min-h-9 cursor-pointer items-center gap-2.5 rounded-sm border border-border bg-background/60 px-3 text-xs tracking-[.08em] text-foreground/60 backdrop-blur-sm transition-colors duration-200 hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground max-sm:flex-1 max-sm:justify-center max-sm:px-2",
-                  isActive && "bg-foreground text-background",
+                  "inline-flex min-h-9 cursor-pointer items-center gap-2.5 rounded-sm border border-border bg-background/60 px-3 text-xs tracking-[.08em] text-foreground/60 backdrop-blur-sm max-sm:flex-1 max-sm:justify-center max-sm:px-2",
                 )}
+                animate={{
+                  backgroundColor: isActive ? "var(--color-foreground)" : "rgb(2 3 5 / 0.6)",
+                  color: isActive ? "var(--color-background)" : "rgb(240 241 242 / 0.6)",
+                }}
+                whileHover={{ backgroundColor: "var(--color-foreground)", color: "var(--color-background)" }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
                 aria-pressed={isActive}
                 onClick={() => setActive(model.id)}
                 onPointerEnter={() => setActive(model.id)}
               >
                 {model.name}
-                <span
-                  className={clsx(
-                    "block size-1 rounded-full bg-current opacity-50",
-                    isActive && "bg-primary opacity-100",
-                  )}
+                <motion.span
+                  className="block size-1 rounded-full"
+                  animate={{
+                    backgroundColor: isActive ? "var(--color-primary)" : "currentColor",
+                    opacity: isActive ? 1 : 0.5,
+                  }}
+                  transition={{ duration: reduceMotion ? 0 : 0.2 }}
                   aria-hidden="true"
                 />
-              </button>
+              </motion.button>
             );
           })}
         </div>

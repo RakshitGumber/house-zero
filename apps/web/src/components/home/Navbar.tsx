@@ -1,7 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
-
-const navItemClass =
-  "inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground";
+import { Icon } from "@iconify/react";
 
 export function Navbar() {
   return (
@@ -10,7 +7,7 @@ export function Navbar() {
       data-ui
     >
       <a
-        className="text-sm font-semibold tracking-[.34em] text-foreground no-underline focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-foreground max-sm:text-xs"
+        className="text-sm font-semibold tracking-[.34em] text-foreground no-underline max-sm:text-xs"
         href="#top"
         aria-label="House Zero home"
       >
@@ -21,22 +18,32 @@ export function Navbar() {
         aria-label="House Zero sections"
         className="flex gap-1.5 max-md:hidden"
       >
-        <a className={navItemClass} href="#models">
+        <a
+          className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
+          href="#models"
+        >
           Models
         </a>
-        <a className={navItemClass} href="#models">
+        <a
+          className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
+          href="#models"
+        >
           Harnesses
         </a>
-        <a className={navItemClass} href="#models">
+        <a
+          className="inline-flex items-center justify-center px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground"
+          href="#models"
+        >
           Memory
         </a>
       </nav>
 
       <a
-        className={`${navItemClass} gap-2 max-sm:text-xs`}
+        className="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-foreground/70 transition-colors duration-150 hover:text-foreground max-sm:text-xs"
         href="#models"
       >
-        Explore <ArrowUpRight aria-hidden="true" size={16} strokeWidth={1.5} />
+        Explore
+        <Icon aria-hidden="true" icon="solar:arrow-right-up-linear" width={16} />
       </a>
     </header>
   );

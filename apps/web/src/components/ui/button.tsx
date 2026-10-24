@@ -1,12 +1,13 @@
 import * as React from "react";
 import { clsx } from "clsx";
+import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 
 type ButtonVariant = "default" | "outline" | "ghost";
 type ButtonSize = "default" | "sm" | "lg" | "icon";
 
 const variants: Record<ButtonVariant, string> = {
-  default: "bg-primary text-primary-foreground shadow-sm hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md",
-  outline: "border border-border bg-background/70 text-foreground shadow-sm backdrop-blur hover:-translate-y-0.5 hover:bg-accent hover:text-accent-foreground",
+  default: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
+  outline: "border border-border bg-background/70 text-foreground shadow-sm backdrop-blur hover:bg-accent hover:text-accent-foreground",
   ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
 };
 
@@ -25,15 +26,16 @@ type ButtonVariantProps = {
 
 function buttonVariants({ variant = "default", size = "default", className }: ButtonVariantProps = {}) {
   return clsx(
-    "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-all outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
     variants[variant],
     sizes[size],
     className,
   );
 }
 
-function Button({ className, variant, size, asChild = false, children, ...props }: React.ComponentProps<"button"> & ButtonVariantProps & { asChild?: boolean }) {
+function Button({ className, variant, size, asChild = false, children, ...props }: HTMLMotionProps<"button"> & ButtonVariantProps & { asChild?: boolean }) {
   const styles = buttonVariants({ variant, size, className });
+  const reduceMotion = useReducedMotion();
 
   if (asChild && React.isValidElement(children)) {
     const child = React.Children.only(children) as React.ReactElement<{ className?: string }>;
@@ -42,7 +44,17 @@ function Button({ className, variant, size, asChild = false, children, ...props 
     });
   }
 
-  return <button data-slot="button" className={styles} {...props}>{children}</button>;
+  return (
+    <motion.button
+      data-slot="button"
+      className={styles}
+      whileHover={variant === "ghost" ? undefined : { y: reduceMotion ? 0 : -2, boxShadow: "0 6px 14px rgb(0 0 0 / 0.22)" }}
+      transition={{ duration: 0.18 }}
+      {...props}
+    >
+      {children}
+    </motion.button>
+  );
 }
 
 export { Button, buttonVariants };

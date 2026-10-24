@@ -6,28 +6,11 @@
   --color-border: rgb(240 241 242 / 13%);
   --color-primary: #8892ff;
   --color-primary-foreground: var(--color-background);
-  --animate-reveal-image: reveal-image 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-orbit-pulse: orbit-pulse 8s ease-in-out infinite alternate;
+}
 
-  @keyframes reveal-image {
-    from {
-      opacity: 0.2;
-      clip-path: inset(0 0 100% 0);
-    }
-    to {
-      opacity: 1;
-      clip-path: inset(0);
-    }
-  }
-
-  @keyframes orbit-pulse {
-    from {
-      opacity: 0.45;
-      scale: 0.98;
-    }
-    to {
-      opacity: 1;
-      scale: 1.02;
-    }
+@layer base {
+  *:focus,
+  *:focus-visible {
+    outline: none;
   }
 }
