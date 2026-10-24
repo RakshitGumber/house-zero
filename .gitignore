@@ -11,6 +11,11 @@ dist/
 .cache/
 *.log
 
+# Local design-review output and browser profiles
+.taste-skill/
+.reference-browser*/
+.review-browser*/
+
 # Environment files
 .env
 .env.*
