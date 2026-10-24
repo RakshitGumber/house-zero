@@ -54,18 +54,21 @@ export function ExploreSection() {
     offset: ["start start", "end end"],
   });
 
-  // Wheel input advances a two-viewport-wide stage along X. The final third
-  // intentionally holds the Earth in the center while scrolling continues.
-  const trackX = useTransform(
+  // The telescope and Earth sit on opposite sides of a broad interior
+  // cylinder. The oversized surfaces keep their rectangular edges outside the
+  // viewport while the world turns around the viewer.
+  const stageRotationTarget = useTransform(
     scrollYProgress,
-    [0, 0.66, 1],
-    ["0vw", "-100vw", "-100vw"],
+    [0, 0.1, 0.7, 1],
+    [0, 0, 180, 180],
   );
-  const telescopeParallax = useTransform(
-    scrollYProgress,
-    [0, 0.66],
-    ["0vw", "18vw"],
-  );
+  const stageRotateY = useSpring(stageRotationTarget, {
+    stiffness: 82,
+    damping: 24,
+    mass: 0.42,
+  });
+  const reducedFrontOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [1, 1, 0, 0]);
+  const reducedBackOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [0, 0, 1, 1]);
   const focusOpacity = useTransform(scrollYProgress, [0.57, 0.7], [0, 1]);
   const buildsOpacity = useTransform(scrollYProgress, [0.66, 0.78], [0, 1]);
   const leftBuildX = useTransform(scrollYProgress, [0.66, 0.8], [-56, 0]);
@@ -111,15 +114,30 @@ export function ExploreSection() {
       >
         <StarField scrollProgress={scrollYProgress} />
 
-        <motion.div
-          className="absolute inset-y-0 left-0 flex w-[200vw] will-change-transform"
-          style={{ x: trackX }}
+        <div
+          className="absolute inset-0"
+          style={{ perspective: "1400px", perspectiveOrigin: "50% 50%" }}
         >
-          <div className="relative h-svh w-screen shrink-0 overflow-visible">
+          <motion.div
+            className="absolute inset-0 will-change-transform"
+            style={{
+              rotateY: reduceMotion ? 0 : stageRotateY,
+              transformStyle: "preserve-3d",
+              // The pivot is behind the front plane and in front of the rear
+              // plane, placing the viewer inside the cylindrical scene.
+              transformOrigin: "50% 50% 1100px",
+            }}
+          >
             <motion.div
-              className="absolute inset-0"
-              style={{ x: reduceMotion ? 0 : telescopeParallax }}
+              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden bg-[#01040b]"
+              style={{
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                opacity: reduceMotion ? reducedFrontOpacity : 1,
+                transform: "translateZ(0)",
+              }}
             >
+              <div className="absolute inset-y-0 left-[60vw] w-screen overflow-hidden">
               <motion.div
                 className="absolute inset-0"
                 style={{
@@ -137,58 +155,69 @@ export function ExploreSection() {
                   alt=""
                 />
               </motion.div>
-            </motion.div>
 
-            <h1
-              className="absolute left-8 top-20 z-[2] m-0 whitespace-nowrap text-[clamp(2rem,6.8vw,6.5rem)] font-normal leading-[1.08] tracking-[-.02em] text-foreground/95 max-md:left-5 max-md:top-16"
-              id="hero-title"
-            >
-              <span className="sr-only">
-                Learn, Research and Develop your own harness, model, or memory.
-              </span>
-              <span className="flex flex-col items-start" aria-hidden="true">
-                <span>Learn,</span>
-                <span>Research and</span>
-                <span>Develop your</span>
-                <span className="flex items-baseline">
-                  <span>own&nbsp;</span>
-                  <span className="inline-grid h-[1.2em] min-w-[7ch] overflow-hidden align-bottom leading-[1.08]">
-                    <AnimatePresence initial={false}>
-                      <motion.span
-                        key={rotatingWords[wordIndex]}
-                        className="col-start-1 row-start-1 text-primary"
-                        initial={reduceMotion ? false : { y: "100%", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={reduceMotion ? undefined : { y: "-100%", opacity: 0 }}
-                        transition={{
-                          duration: reduceMotion ? 0 : 0.8,
-                          ease: easeOut,
-                        }}
-                      >
-                        {rotatingWords[wordIndex]}
-                      </motion.span>
-                    </AnimatePresence>
+              <h1
+                className="absolute left-8 top-20 z-[2] m-0 whitespace-nowrap text-[clamp(2rem,6.8vw,6.5rem)] font-normal leading-[1.08] tracking-[-.02em] text-foreground/95 max-md:left-5 max-md:top-16"
+                id="hero-title"
+              >
+                <span className="sr-only">
+                  Learn, Research and Develop your own harness, model, or memory.
+                </span>
+                <span className="flex flex-col items-start" aria-hidden="true">
+                  <span>Learn,</span>
+                  <span>Research and</span>
+                  <span>Develop your</span>
+                  <span className="flex items-baseline">
+                    <span>own&nbsp;</span>
+                    <span className="inline-grid h-[1.2em] min-w-[7ch] overflow-hidden align-bottom leading-[1.08]">
+                      <AnimatePresence initial={false}>
+                        <motion.span
+                          key={rotatingWords[wordIndex]}
+                          className="col-start-1 row-start-1 text-primary"
+                          initial={reduceMotion ? false : { y: "100%", opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          exit={reduceMotion ? undefined : { y: "-100%", opacity: 0 }}
+                          transition={{
+                            duration: reduceMotion ? 0 : 0.8,
+                            ease: easeOut,
+                          }}
+                        >
+                          {rotatingWords[wordIndex]}
+                        </motion.span>
+                      </AnimatePresence>
+                    </span>
                   </span>
                 </span>
-              </span>
-            </h1>
+              </h1>
 
-            <p className="absolute bottom-15 left-8 z-[2] m-0 w-88 text-lg font-medium leading-relaxed tracking-[-.01em] text-foreground/60 max-md:bottom-24 max-md:left-5 max-md:w-[min(34ch,calc(100vw-2.5rem))]">
-              A home for a new class of AI. Discover System One models, then run
-              them yourself or through House Zero.
-            </p>
-          </div>
+              <p className="absolute bottom-15 left-8 z-[2] m-0 w-88 text-lg font-medium leading-relaxed tracking-[-.01em] text-foreground/60 max-md:bottom-24 max-md:left-5 max-md:w-[min(34ch,calc(100vw-2.5rem))]">
+                A home for a new class of AI. Discover System One models, then run
+                them yourself or through House Zero.
+              </p>
+              </div>
+            </motion.div>
 
-          <div className="relative h-svh w-screen shrink-0 overflow-hidden">
             <motion.div
-              className="absolute inset-0"
+              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden bg-[#01040b]"
               style={{
-                x: reduceMotion ? 0 : scenePointerX,
-                y: reduceMotion ? 0 : scenePointerY,
+                backfaceVisibility: "hidden",
+                WebkitBackfaceVisibility: "hidden",
+                opacity: reduceMotion ? reducedBackOpacity : 1,
+                transform: reduceMotion
+                  ? "translateZ(0)"
+                  : "rotateY(180deg) translateZ(-2200px)",
               }}
             >
-              <ParticleEarth scrollProgress={scrollYProgress} />
-            </motion.div>
+              <div className="absolute inset-y-0 left-[60vw] w-screen overflow-hidden">
+              <motion.div
+                className="absolute inset-0"
+                style={{
+                  x: reduceMotion ? 0 : scenePointerX,
+                  y: reduceMotion ? 0 : scenePointerY,
+                }}
+              >
+                <ParticleEarth scrollProgress={scrollYProgress} />
+              </motion.div>
 
             <motion.div
               className="pointer-events-none absolute left-1/2 top-1/2 z-[1] aspect-square w-[min(70vw,70vh)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
@@ -252,8 +281,20 @@ export function ExploreSection() {
             >
               Move your pointer through the Earth.
             </motion.p>
-          </div>
-        </motion.div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <div
+          className="pointer-events-none absolute inset-0 z-[3]"
+          style={{
+            background:
+              "radial-gradient(ellipse 82% 118% at 50% 50%, transparent 48%, rgb(0 2 9 / .28) 78%, rgb(0 1 6 / .72) 100%)",
+            boxShadow: "inset 0 0 12vw rgb(0 0 0 / .32)",
+          }}
+          aria-hidden="true"
+        />
       </div>
     </section>
   );
