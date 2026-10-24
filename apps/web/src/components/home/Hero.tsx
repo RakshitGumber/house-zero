@@ -1,57 +1,59 @@
-const models = ["JEV", "Clef", "Clairic"];
+const indexedModels = ["JEV", "Clef", "Clairic"];
 
 export function Hero() {
   return (
-    <main
-      id="models"
-      className="min-h-[calc(100svh-8.25rem)] bg-background text-foreground"
-    >
-      <div className="mx-auto grid max-w-7xl gap-16 px-5 py-20 sm:px-8 sm:py-28 lg:grid-cols-[minmax(0,1.35fr)_minmax(19rem,0.65fr)] lg:items-end lg:py-32">
-        <div className="max-w-4xl">
-          <h1 className="max-w-3xl text-5xl font-bold leading-[0.96] tracking-[-0.05em] sm:text-7xl lg:text-8xl">
-            Intelligence for your work.
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
-            Discover System One models, run them on your own infrastructure, or
-            use them through House Zero. Add portable harnesses and memory as
-            your work grows.
-          </p>
+    <main className="dot-field mx-4 border-x border-dashed border-border bg-background text-foreground sm:mx-6 lg:mx-8">
+      <section className="flex min-h-[calc(100svh-7rem)] flex-col justify-between px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
+        <h1 className="max-w-5xl text-[clamp(3rem,8vw,8.5rem)] font-bold leading-[0.88] tracking-[-0.065em]">
+          System One,
+          <br />
+          indexed.
+        </h1>
 
-          <div id="paths" className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#resources"
-              className="bg-primary px-6 py-4 text-center font-bold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Browse the ecosystem
-            </a>
-            <a
-              href="#resources"
-              className="bg-card px-6 py-4 text-center font-bold text-card-foreground transition-colors hover:bg-muted"
-            >
-              See how it works
-            </a>
+        <div className="mt-20 grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(26rem,1.2fr)] lg:items-end">
+          <div className="max-w-xl">
+            <p className="text-xl leading-8 text-foreground sm:text-2xl sm:leading-9">
+              Discover System One models and the portable harnesses and memory
+              modules built around them.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <a
+                href="#directory"
+                className="clip-button bg-primary px-7 py-4 font-bold text-primary-foreground transition-colors hover:bg-foreground"
+              >
+                Explore the directory
+              </a>
+              <a
+                href="#deployment"
+                className="clip-button bg-foreground px-7 py-4 font-bold text-background transition-colors hover:bg-primary"
+              >
+                Choose how to run
+              </a>
+            </div>
+          </div>
+
+          <div data-ui className="bg-card p-5 sm:p-7">
+            <div className="flex items-center justify-between gap-4 border-b border-dashed border-border pb-4">
+              <p className="font-bold">Open research index</p>
+              <span className="text-sm text-muted-foreground">System One</span>
+            </div>
+            <ul className="divide-y divide-dashed divide-border">
+              {indexedModels.map((model, index) => (
+                <li key={model} className="grid grid-cols-[2rem_1fr_auto] items-center gap-3 py-5">
+                  <span className="text-sm text-muted-foreground">{index + 1}</span>
+                  <span className="text-2xl font-bold">{model}</span>
+                  <span className="text-primary" aria-hidden="true">
+                    ↗
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="pt-3 text-sm leading-6 text-muted-foreground">
+              Compare a model, then choose self-hosted or managed access.
+            </p>
           </div>
         </div>
-
-        <section id="resources" aria-labelledby="model-list-title" className="bg-card p-7 sm:p-9">
-          <h2 id="model-list-title" className="text-lg font-bold">
-            Start with a model
-          </h2>
-          <ul className="mt-8 space-y-5">
-            {models.map((model) => (
-              <li key={model} className="flex items-center justify-between text-2xl font-bold">
-                <span>{model}</span>
-                <span aria-hidden="true" className="text-primary">
-                  →
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-10 text-sm leading-6 text-muted-foreground">
-            Pair any model with shareable harnesses and portable memory modules.
-          </p>
-        </section>
-      </div>
+      </section>
     </main>
   );
 }

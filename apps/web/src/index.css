@@ -4,17 +4,28 @@
   --font-sans: "Lato", ui-sans-serif, system-ui, sans-serif;
   --font-heading: "Sora Variable", ui-sans-serif, system-ui, sans-serif;
 
-  --color-background: #f5f6fa;
-  --color-foreground: #202235;
+  --color-background: #efefec;
+  --color-foreground: #29283d;
   --color-card: #ffffff;
-  --color-card-foreground: #202235;
-  --color-muted: #e9eaf2;
-  --color-muted-foreground: #4f5266;
-  --color-border: #d7d9e5;
+  --color-card-foreground: #29283d;
+  --color-muted: #dedfdd;
+  --color-muted-foreground: #555568;
+  --color-border: #c4c5c8;
   --color-primary: #5b5bd6;
   --color-primary-foreground: #ffffff;
-  --color-accent: #e4e5ff;
+  --color-accent: #dedfff;
   --color-accent-foreground: #343493;
+}
+
+@layer components {
+  .dot-field {
+    background-image: radial-gradient(rgb(41 40 61 / 14%) 0.8px, transparent 0.8px);
+    background-size: 8px 8px;
+  }
+
+  .clip-button {
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+  }
 }
 
 @layer base {
