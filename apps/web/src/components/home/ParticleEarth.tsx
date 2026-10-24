@@ -116,7 +116,7 @@ export function ParticleEarth({ scrollProgress }: ParticleEarthProps) {
       const particleLimit = compact ? 1100 : PARTICLE_COUNT;
       const centerX = width * 0.5;
       const centerY = height * (compact ? 0.42 : 0.5);
-      const globeRadius = Math.min(width * (compact ? 0.43 : 0.31), height * 0.38);
+      const globeRadius = Math.min(width * (compact ? 0.48 : 0.38), height * 0.44);
       const rotationY =
         scrollValue.current * (reduceMotion ? 0.35 : 1.15) +
         pointerTilt.current.x * 0.38 -

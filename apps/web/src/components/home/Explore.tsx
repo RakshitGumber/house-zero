@@ -69,11 +69,33 @@ export function ExploreSection() {
   });
   const reducedFrontOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [1, 1, 0, 0]);
   const reducedBackOpacity = useTransform(scrollYProgress, [0, 0.46, 0.54, 1], [0, 0, 1, 1]);
-  const focusOpacity = useTransform(scrollYProgress, [0.57, 0.7], [0, 1]);
-  const buildsOpacity = useTransform(scrollYProgress, [0.66, 0.78], [0, 1]);
-  const leftBuildX = useTransform(scrollYProgress, [0.66, 0.8], [-56, 0]);
-  const rightBuildX = useTransform(scrollYProgress, [0.66, 0.8], [56, 0]);
-  const instructionOpacity = useTransform(scrollYProgress, [0.72, 0.84], [0, 1]);
+  const telescopeDropTarget = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.62, 0.82],
+    ["0vh", "0vh", "18vh", "34vh"],
+  );
+  const telescopeDropY = useSpring(telescopeDropTarget, {
+    stiffness: 55,
+    damping: 24,
+    mass: 0.7,
+  });
+  const earthDropTarget = useTransform(
+    scrollYProgress,
+    [0, 0.82, 0.95, 1],
+    ["-42vh", "-42vh", "0vh", "0vh"],
+  );
+  const earthDropY = useSpring(earthDropTarget, {
+    stiffness: 55,
+    damping: 24,
+    mass: 0.7,
+  });
+  const focusOpacity = useTransform(scrollYProgress, [0.91, 0.95], [0, 1]);
+  const earthCopyOpacity = useTransform(scrollYProgress, [0.95, 0.98], [0, 1]);
+  const earthCopyY = useTransform(scrollYProgress, [0.95, 0.98], [28, 0]);
+  const buildsOpacity = useTransform(scrollYProgress, [0.965, 1], [0, 1]);
+  const leftBuildX = useTransform(scrollYProgress, [0.965, 1], [-56, 0]);
+  const rightBuildX = useTransform(scrollYProgress, [0.965, 1], [56, 0]);
+  const instructionOpacity = useTransform(scrollYProgress, [0.98, 1], [0, 1]);
 
   useEffect(() => {
     if (reduceMotion) return;
@@ -129,7 +151,7 @@ export function ExploreSection() {
             }}
           >
             <motion.div
-              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden bg-[#01040b]"
+              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden"
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
@@ -138,6 +160,10 @@ export function ExploreSection() {
               }}
             >
               <div className="absolute inset-y-0 left-[60vw] w-screen">
+              <motion.div
+                className="absolute inset-0"
+                style={{ y: reduceMotion ? 0 : telescopeDropY }}
+              >
               <motion.div
                 className="absolute inset-0"
                 style={{
@@ -154,6 +180,7 @@ export function ExploreSection() {
                   src="/images/telescope-cutout.png"
                   alt=""
                 />
+              </motion.div>
               </motion.div>
 
               <h1
@@ -198,7 +225,7 @@ export function ExploreSection() {
             </motion.div>
 
             <motion.div
-              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden bg-[#01040b]"
+              className="absolute inset-y-0 left-[-60vw] w-[220vw] overflow-hidden"
               style={{
                 backfaceVisibility: "hidden",
                 WebkitBackfaceVisibility: "hidden",
@@ -211,6 +238,10 @@ export function ExploreSection() {
               <div className="absolute inset-y-0 left-[60vw] w-screen overflow-hidden">
               <motion.div
                 className="absolute inset-0"
+                style={{ y: reduceMotion ? 0 : earthDropY }}
+              >
+              <motion.div
+                className="absolute inset-0"
                 style={{
                   x: reduceMotion ? 0 : scenePointerX,
                   y: reduceMotion ? 0 : scenePointerY,
@@ -219,13 +250,20 @@ export function ExploreSection() {
                 <ParticleEarth scrollProgress={scrollYProgress} />
               </motion.div>
 
-            <motion.div
-              className="pointer-events-none absolute left-1/2 top-1/2 z-[1] aspect-square w-[min(70vw,70vh)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
-              style={{ opacity: focusOpacity }}
-              aria-hidden="true"
-            />
+              <motion.div
+                className="pointer-events-none absolute left-1/2 top-1/2 z-[1] aspect-square w-[min(84vw,84vh)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
+                style={{ opacity: reduceMotion ? 1 : focusOpacity }}
+                aria-hidden="true"
+              />
+              </motion.div>
 
-            <div className="pointer-events-none absolute left-8 top-20 z-[2] max-w-xl max-md:left-5 max-md:right-5 max-md:top-16">
+            <motion.div
+              className="pointer-events-none absolute left-8 top-20 z-[2] max-w-xl max-md:left-5 max-md:right-5 max-md:top-16"
+              style={{
+                opacity: reduceMotion ? 1 : earthCopyOpacity,
+                y: reduceMotion ? 0 : earthCopyY,
+              }}
+            >
               <h2 className="m-0 text-[clamp(2.25rem,4.8vw,4.75rem)] font-normal leading-[.98] tracking-[-.03em] text-foreground">
                 Explore the field.
               </h2>
@@ -233,7 +271,7 @@ export function ExploreSection() {
                 See what builders are assembling around open models, harnesses,
                 and memory.
               </p>
-            </div>
+            </motion.div>
 
             <motion.div
               className="pointer-events-none absolute left-8 top-[34%] z-[2] w-[22vw] max-w-78 space-y-12 max-md:bottom-9 max-md:left-5 max-md:top-auto max-md:w-[42%] max-md:space-y-6"
