@@ -1,6 +1,6 @@
 import { createRoute } from "@tanstack/react-router";
 
-import { HeroSection } from "@/components/home/Hero";
+import { ExploreSection } from "@/components/home/Explore";
 import { Navbar } from "@/components/home/Navbar";
 import { rootRoute } from "@/routes/__root";
 
@@ -14,7 +14,7 @@ function LandingPage() {
   return (
     <main className="min-h-svh bg-background">
       <Navbar />
-      <HeroSection />
+      <ExploreSection />
     </main>
   );
 }
