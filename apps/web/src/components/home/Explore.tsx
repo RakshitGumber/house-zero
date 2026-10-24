@@ -9,8 +9,9 @@ import {
 } from "framer-motion";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 
-import { ParticleEarth } from "@/components/home/ParticleEarth";
-import { StarField } from "@/components/home/StarField";
+import { ParticleEarth } from "@/components/effect/ParticleEarth";
+import { PlanetEnvironment } from "@/components/effect/PlanetEnvironment";
+import { StarField } from "@/components/effect/StarField";
 
 const easeOut = [0.16, 1, 0.3, 1] as const;
 const rotatingWords = ["harness", "model", "memory"] as const;
@@ -59,7 +60,7 @@ export function ExploreSection() {
   // viewport while the world turns around the viewer.
   const stageRotationTarget = useTransform(
     scrollYProgress,
-    [0, 0.08, 0.82, 1],
+    [0, 0.08, 0.78, 1],
     [0, 0, 180, 180],
   );
   const stageRotateY = useSpring(stageRotationTarget, {
@@ -79,23 +80,23 @@ export function ExploreSection() {
     damping: 24,
     mass: 0.7,
   });
-  const earthDropTarget = useTransform(
+  const earthCopyOpacity = useTransform(scrollYProgress, [0.79, 0.84], [0, 1]);
+  const earthCopyY = useTransform(scrollYProgress, [0.79, 0.84], [28, 0]);
+  const buildsOpacity = useTransform(scrollYProgress, [0.83, 0.89], [0, 1]);
+  const leftBuildX = useTransform(scrollYProgress, [0.83, 0.89], [-56, 0]);
+  const rightBuildX = useTransform(scrollYProgress, [0.83, 0.89], [56, 0]);
+  const earthRevealOpacity = useTransform(scrollYProgress, [0.87, 0.95], [0, 1]);
+  const earthRevealScale = useTransform(
     scrollYProgress,
-    [0, 0.82, 0.95, 1],
-    ["-42vh", "-42vh", "0vh", "0vh"],
+    [0.87, 0.975, 1],
+    [0.48, 1.08, 1],
   );
-  const earthDropY = useSpring(earthDropTarget, {
-    stiffness: 55,
-    damping: 24,
-    mass: 0.7,
-  });
-  const focusOpacity = useTransform(scrollYProgress, [0.91, 0.95], [0, 1]);
-  const earthCopyOpacity = useTransform(scrollYProgress, [0.95, 0.98], [0, 1]);
-  const earthCopyY = useTransform(scrollYProgress, [0.95, 0.98], [28, 0]);
-  const buildsOpacity = useTransform(scrollYProgress, [0.965, 1], [0, 1]);
-  const leftBuildX = useTransform(scrollYProgress, [0.965, 1], [-56, 0]);
-  const rightBuildX = useTransform(scrollYProgress, [0.965, 1], [56, 0]);
-  const instructionOpacity = useTransform(scrollYProgress, [0.98, 1], [0, 1]);
+  const earthRevealY = useTransform(
+    scrollYProgress,
+    [0.87, 1],
+    ["-52vh", "0vh"],
+  );
+  const instructionOpacity = useTransform(scrollYProgress, [0.97, 1], [0, 1]);
 
   useEffect(() => {
     if (reduceMotion) return;
@@ -134,7 +135,7 @@ export function ExploreSection() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
       >
-        <StarField scrollProgress={scrollYProgress} />
+        <StarField />
 
         <div
           className="absolute inset-0"
@@ -236,25 +237,20 @@ export function ExploreSection() {
               }}
             >
               <div className="absolute inset-y-0 left-[60vw] w-screen overflow-hidden">
+              <PlanetEnvironment />
               <motion.div
-                className="absolute inset-0"
-                style={{ y: reduceMotion ? 0 : earthDropY }}
-              >
-              <motion.div
-                className="absolute inset-0"
+                className="absolute inset-0 z-[1]"
                 style={{
-                  x: reduceMotion ? 0 : scenePointerX,
-                  y: reduceMotion ? 0 : scenePointerY,
+                  opacity: reduceMotion ? 1 : earthRevealOpacity,
+                  scale: reduceMotion ? 1 : earthRevealScale,
+                  y: reduceMotion ? 0 : earthRevealY,
+                  transformOrigin: "50% 50%",
                 }}
               >
-                <ParticleEarth scrollProgress={scrollYProgress} />
-              </motion.div>
+              <div className="absolute inset-0">
+                <ParticleEarth />
+              </div>
 
-              <motion.div
-                className="pointer-events-none absolute left-1/2 top-1/2 z-[1] aspect-square w-[min(84vw,84vh)] -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20"
-                style={{ opacity: reduceMotion ? 1 : focusOpacity }}
-                aria-hidden="true"
-              />
               </motion.div>
 
             <motion.div
