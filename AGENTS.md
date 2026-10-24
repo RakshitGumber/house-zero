@@ -8,3 +8,4 @@
 - Do not create `docs/superpowers`, implementation-plan files, or spec files as workflow artifacts unless the user explicitly requests them.
 - Work directly on requested implementation tasks and keep progress notes in the conversation.
 - Do not rebuild after every command or small edit. Batch changes and run a build only once for final verification when the task warrants it.
+- Write frontend styling with Tailwind CSS utilities by default. Use traditional CSS only when Tailwind cannot express or solve the required visual behavior.
