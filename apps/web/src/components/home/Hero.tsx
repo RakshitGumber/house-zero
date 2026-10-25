@@ -1,59 +1,134 @@
-const indexedModels = ["JEV", "Clef", "Clairic"];
+import { useState } from "react";
+
+const models = ["Clairic 7B", "JEV Reasoning", "Clef Compact"];
+const tools = ["Web retrieval", "Document index", "Code runner"];
+const evaluators = ["Citation integrity", "Task completion", "Tool reliability"];
 
 export function Hero() {
+  const [model, setModel] = useState(models[0]!);
+  const [tool, setTool] = useState(tools[0]!);
+  const [evaluator, setEvaluator] = useState(evaluators[0]!);
+  const [hasRun, setHasRun] = useState(false);
+
   return (
-    <main className="dot-field mx-4 border-x border-dashed border-border bg-background text-foreground sm:mx-6 lg:mx-8">
-      <section className="flex min-h-[calc(100svh-7rem)] flex-col justify-between px-5 py-14 sm:px-8 sm:py-16 lg:px-10 lg:py-20">
-        <h1 className="max-w-5xl text-[clamp(3rem,8vw,8.5rem)] font-bold leading-[0.88] tracking-[-0.065em]">
-          System One,
-          <br />
-          indexed.
-        </h1>
-
-        <div className="mt-20 grid gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(26rem,1.2fr)] lg:items-end">
-          <div className="max-w-xl">
-            <p className="text-xl leading-8 text-foreground sm:text-2xl sm:leading-9">
-              Discover System One models and the portable harnesses and memory
-              modules built around them.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-2">
-              <a
-                href="#directory"
-                className="clip-button bg-primary px-7 py-4 font-bold text-primary-foreground transition-colors hover:bg-foreground"
-              >
-                Explore the directory
-              </a>
-              <a
-                href="#deployment"
-                className="clip-button bg-foreground px-7 py-4 font-bold text-background transition-colors hover:bg-primary"
-              >
-                Choose how to run
-              </a>
-            </div>
+    <main className="overflow-hidden bg-background">
+      <section className="relative min-h-[calc(100svh-5rem)] px-4 pb-0 pt-12 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
+        <div className="relative z-10 max-w-[46rem]">
+          <h1 className="max-w-[12ch] text-[clamp(3.5rem,7.2vw,7rem)] font-medium leading-[0.88] tracking-[-0.055em] text-foreground">
+            Build the whole AI system
+          </h1>
+          <p className="mt-8 max-w-[29rem] text-lg leading-7 sm:text-xl sm:leading-8">
+            House Zero is an online lab for building harnesses, training models, testing workflows, and proving what works at scale.
+          </p>
+          <div className="mt-8 flex items-center gap-6">
+            <a
+              className="bg-foreground px-6 py-4 font-medium text-background transition-colors hover:bg-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              href="#create"
+            >
+              Enter the lab
+            </a>
+            <a className="underline decoration-1 underline-offset-4 hover:text-primary" href="#experiments">
+              Explore experiments
+            </a>
           </div>
+        </div>
 
-          <div data-ui className="bg-card p-5 sm:p-7">
-            <div className="flex items-center justify-between gap-4 border-b border-dashed border-border pb-4">
-              <p className="font-bold">Open research index</p>
-              <span className="text-sm text-muted-foreground">System One</span>
+        <div className="stage-cut hero-shutter relative -mx-4 mt-20 min-h-[35rem] bg-primary px-4 py-10 sm:-mx-6 sm:px-6 lg:absolute lg:bottom-0 lg:left-[38%] lg:right-0 lg:mt-0 lg:min-h-[58%] lg:px-14 lg:py-14">
+          <div
+            data-ui
+            aria-label="Interactive demo experiment composer"
+            className="mx-auto max-w-[70rem] bg-ui text-ui-foreground lg:mx-0"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-ui-strong px-4 py-3 text-ui-inverse sm:px-5">
+              <div className="flex items-center gap-3">
+                <span className="size-2 bg-primary-light" aria-hidden="true" />
+                <strong className="font-medium">Source-grounded research</strong>
+              </div>
+              <span className="text-xs text-ui-inverse/70">Demo experiment</span>
             </div>
-            <ul className="divide-y divide-dashed divide-border">
-              {indexedModels.map((model, index) => (
-                <li key={model} className="grid grid-cols-[2rem_1fr_auto] items-center gap-3 py-5">
-                  <span className="text-sm text-muted-foreground">{index + 1}</span>
-                  <span className="text-2xl font-bold">{model}</span>
-                  <span className="text-primary" aria-hidden="true">
-                    ↗
+
+            <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
+              <form className="space-y-5 bg-ui-soft p-4 sm:p-6">
+                <label className="block text-sm font-medium">
+                  Model
+                  <select
+                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    value={model}
+                    onChange={(event) => { setModel(event.target.value); setHasRun(false); }}
+                  >
+                    {models.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                </label>
+                <label className="block text-sm font-medium">
+                  Tool
+                  <select
+                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    value={tool}
+                    onChange={(event) => { setTool(event.target.value); setHasRun(false); }}
+                  >
+                    {tools.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                </label>
+                <label className="block text-sm font-medium">
+                  Evaluation
+                  <select
+                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    value={evaluator}
+                    onChange={(event) => { setEvaluator(event.target.value); setHasRun(false); }}
+                  >
+                    {evaluators.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setHasRun(true)}
+                  className="min-h-11 w-full bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                >
+                  {hasRun ? "Run again" : "Run demo"}
+                </button>
+              </form>
+
+              <div className="p-4 sm:p-6" aria-live="polite">
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="text-lg font-medium">Execution trace</h2>
+                  <span className={`text-sm ${hasRun ? "text-pass" : "text-ui-muted"}`}>
+                    {hasRun ? "Evaluation passed" : "Ready to run"}
                   </span>
-                </li>
-              ))}
-            </ul>
-            <p className="pt-3 text-sm leading-6 text-muted-foreground">
-              Compare a model, then choose self-hosted or managed access.
-            </p>
+                </div>
+                <div className="mt-6 space-y-3">
+                  <TraceRow label="Task" value="Compare two claims and return the supporting evidence." active />
+                  <TraceRow label="Model" value={model} active={hasRun} />
+                  <TraceRow label="Tool call" value={tool} active={hasRun} />
+                  <TraceRow label="Evaluation" value={evaluator} active={hasRun} />
+                </div>
+                <div className="mt-6 grid grid-cols-3 bg-ui-soft p-4 text-sm tabular-nums">
+                  <Metric label="Latency" value={hasRun ? "1.7 s" : "—"} />
+                  <Metric label="Tokens" value={hasRun ? "2,184" : "—"} />
+                  <Metric label="Cost" value={hasRun ? "$0.014" : "—"} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+function TraceRow({ label, value, active }: { label: string; value: string; active: boolean }) {
+  return (
+    <div className={`grid grid-cols-[5.5rem_1fr] gap-3 border-l-2 px-3 py-2 text-sm ${active ? "border-primary bg-ui-soft" : "border-ui-line text-ui-muted"}`}>
+      <span>{label}</span>
+      <strong className="font-medium text-ui-foreground">{value}</strong>
+    </div>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <span className="block text-ui-muted">{label}</span>
+      <strong className="mt-1 block font-medium">{value}</strong>
+    </div>
   );
 }

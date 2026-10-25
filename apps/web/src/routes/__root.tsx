@@ -8,7 +8,7 @@ export const rootRoute = createRootRoute({
 
 function RootLayout() {
   return (
-    <div className="min-h-screen overflow-x-clip bg-background text-foreground">
+    <div className="min-h-svh overflow-x-clip bg-background text-foreground">
       <Outlet />
     </div>
   );

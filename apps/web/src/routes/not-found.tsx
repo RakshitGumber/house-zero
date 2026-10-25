@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 export function NotFoundPage() {
   return (
-    <main className="grid min-h-screen place-items-center px-6 text-center">
+    <main className="grid min-h-svh place-items-center px-6 text-center">
       <div>
         <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
           404
