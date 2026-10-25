@@ -16,7 +16,7 @@ export function HouseZeroLogo({
       <text
         x="36"
         y="56"
-        fill="oklch(77.7% 0.152 181.912)"
+        fill="var(--color-primary)"
         fontFamily="monospace"
         fontSize="54"
         fontWeight="700"

@@ -37,22 +37,22 @@ export function Hero() {
           <div
             data-ui
             aria-label="Interactive demo experiment composer"
-            className="mx-auto max-w-[70rem] bg-ui text-ui-foreground lg:mx-0"
+            className="mx-auto max-w-[70rem] bg-surface text-foreground lg:mx-0"
           >
-            <div className="flex flex-wrap items-center justify-between gap-3 bg-ui-strong px-4 py-3 text-ui-inverse sm:px-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-foreground px-4 py-3 text-background sm:px-5">
               <div className="flex items-center gap-3">
                 <span className="size-2 bg-primary-light" aria-hidden="true" />
                 <strong className="font-medium">Source-grounded research</strong>
               </div>
-              <span className="text-xs text-ui-inverse/70">Demo experiment</span>
+              <span className="text-xs text-background/70">Demo experiment</span>
             </div>
 
             <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
-              <form className="space-y-5 bg-ui-soft p-4 sm:p-6">
+              <form className="space-y-5 bg-background p-4 sm:p-6">
                 <label className="block text-sm font-medium">
                   Model
                   <select
-                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={model}
                     onChange={(event) => { setModel(event.target.value); setHasRun(false); }}
                   >
@@ -62,7 +62,7 @@ export function Hero() {
                 <label className="block text-sm font-medium">
                   Tool
                   <select
-                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={tool}
                     onChange={(event) => { setTool(event.target.value); setHasRun(false); }}
                   >
@@ -72,7 +72,7 @@ export function Hero() {
                 <label className="block text-sm font-medium">
                   Evaluation
                   <select
-                    className="mt-2 min-h-11 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={evaluator}
                     onChange={(event) => { setEvaluator(event.target.value); setHasRun(false); }}
                   >
@@ -82,7 +82,7 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={() => setHasRun(true)}
-                  className="min-h-11 w-full bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                  className="min-h-11 w-full bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
                 >
                   {hasRun ? "Run again" : "Run demo"}
                 </button>
@@ -91,7 +91,7 @@ export function Hero() {
               <div className="p-4 sm:p-6" aria-live="polite">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="text-lg font-medium">Execution trace</h2>
-                  <span className={`text-sm ${hasRun ? "text-pass" : "text-ui-muted"}`}>
+                  <span className={`text-sm ${hasRun ? "text-pass" : "text-muted-foreground"}`}>
                     {hasRun ? "Evaluation passed" : "Ready to run"}
                   </span>
                 </div>
@@ -101,7 +101,7 @@ export function Hero() {
                   <TraceRow label="Tool call" value={tool} active={hasRun} />
                   <TraceRow label="Evaluation" value={evaluator} active={hasRun} />
                 </div>
-                <div className="mt-6 grid grid-cols-3 bg-ui-soft p-4 text-sm tabular-nums">
+                <div className="mt-6 grid grid-cols-3 bg-background p-4 text-sm tabular-nums">
                   <Metric label="Latency" value={hasRun ? "1.7 s" : "—"} />
                   <Metric label="Tokens" value={hasRun ? "2,184" : "—"} />
                   <Metric label="Cost" value={hasRun ? "$0.014" : "—"} />
@@ -117,9 +117,9 @@ export function Hero() {
 
 function TraceRow({ label, value, active }: { label: string; value: string; active: boolean }) {
   return (
-    <div className={`grid grid-cols-[5.5rem_1fr] gap-3 border-l-2 px-3 py-2 text-sm ${active ? "border-primary bg-ui-soft" : "border-ui-line text-ui-muted"}`}>
+    <div className={`grid grid-cols-[5.5rem_1fr] gap-3 border-l-2 px-3 py-2 text-sm ${active ? "border-primary bg-background" : "border-muted-foreground/30 text-muted-foreground"}`}>
       <span>{label}</span>
-      <strong className="font-medium text-ui-foreground">{value}</strong>
+      <strong className="font-medium text-foreground">{value}</strong>
     </div>
   );
 }
@@ -127,7 +127,7 @@ function TraceRow({ label, value, active }: { label: string; value: string; acti
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <span className="block text-ui-muted">{label}</span>
+      <span className="block text-muted-foreground">{label}</span>
       <strong className="mt-1 block font-medium">{value}</strong>
     </div>
   );

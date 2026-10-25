@@ -29,7 +29,7 @@ export function Deployment() {
                   key={measure}
                   type="button"
                   onClick={() => setActive(measure)}
-                  className={`min-h-11 px-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${active === measure ? "bg-foreground text-background" : "bg-primary-dark text-primary-foreground hover:bg-foreground hover:text-background"}`}
+                  className={`min-h-11 px-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${active === measure ? "bg-foreground text-background" : "bg-primary-dark text-white hover:bg-foreground hover:text-background"}`}
                 >
                   {measure}
                 </button>
@@ -37,18 +37,18 @@ export function Deployment() {
             </div>
           </div>
 
-          <div data-ui className="bg-ui p-5 text-ui-foreground sm:p-8 lg:col-span-7 lg:col-start-6" aria-live="polite">
-            <div className="flex items-center justify-between gap-3"><span className="text-ui-muted">Scale comparison</span><span className="text-sm">Demo data</span></div>
+          <div data-ui className="bg-surface p-5 text-foreground sm:p-8 lg:col-span-7 lg:col-start-6" aria-live="polite">
+            <div className="flex items-center justify-between gap-3"><span className="text-muted-foreground">Scale comparison</span><span className="text-sm">Demo data</span></div>
             <div className="mt-9 flex items-end justify-between gap-8">
-              <div><span className="text-ui-muted">{active}</span><strong className="mt-1 block text-5xl font-medium tracking-[-0.04em] tabular-nums">{selected.value}</strong></div>
-              <p className="max-w-56 text-right text-sm leading-6 text-ui-muted">{selected.note}</p>
+              <div><span className="text-muted-foreground">{active}</span><strong className="mt-1 block text-5xl font-medium tracking-[-0.04em] tabular-nums">{selected.value}</strong></div>
+              <p className="max-w-56 text-right text-sm leading-6 text-muted-foreground">{selected.note}</p>
             </div>
-            <div className="mt-10 grid h-52 grid-cols-5 items-end gap-3 bg-ui-soft p-5">
+            <div className="mt-10 grid h-52 grid-cols-5 items-end gap-3 bg-background p-5">
               {selected.bars.map((height, index) => (
                 <div key={`${active}-${index}`} className="metric-bar bg-primary" style={{ height: `${height}%` }} />
               ))}
             </div>
-            <div className="mt-4 flex justify-between text-sm text-ui-muted"><span>Version A</span><span>Version E</span></div>
+            <div className="mt-4 flex justify-between text-sm text-muted-foreground"><span>Version A</span><span>Version E</span></div>
           </div>
         </div>
       </section>
@@ -59,15 +59,15 @@ export function Deployment() {
             <h2 className="text-[clamp(2.6rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em]">Shared research</h2>
             <p className="mt-8 text-lg leading-8">Keep the system, configuration, dataset, run history, and evaluation result together.</p>
           </div>
-          <div data-ui className="bg-ui text-ui-foreground lg:col-span-6 lg:col-start-7">
+          <div data-ui className="bg-surface text-foreground lg:col-span-6 lg:col-start-7">
             {[
               ["Version the experiment", "Harness, model, and evaluator move together."],
               ["Review the exact step", "Comments attach to a decision in the trace."],
               ["Compare before release", "Branches run against the same task set."],
               ["Publish the limitations", "Evidence and constraints travel with the artifact."],
             ].map(([title, text], index) => (
-              <div key={title} className={`grid gap-2 px-6 py-6 sm:grid-cols-[1fr_1.2fr] ${index % 2 ? "bg-ui-soft" : "bg-ui"}`}>
-                <strong className="font-medium">{title}</strong><span className="text-ui-muted">{text}</span>
+              <div key={title} className={`grid gap-2 px-6 py-6 sm:grid-cols-[1fr_1.2fr] ${index % 2 ? "bg-background" : "bg-surface"}`}>
+                <strong className="font-medium">{title}</strong><span className="text-muted-foreground">{text}</span>
               </div>
             ))}
           </div>

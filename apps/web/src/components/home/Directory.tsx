@@ -69,14 +69,14 @@ export function Directory() {
                 </div>
                 <div
                   data-ui
-                  className={`bg-ui p-5 text-ui-foreground ${index % 2 ? "lg:col-start-1 lg:row-start-1" : ""}`}
+                  className={`bg-surface p-5 text-foreground ${index % 2 ? "lg:col-start-1 lg:row-start-1" : ""}`}
                 >
-                  <div className="flex items-center justify-between gap-4 text-sm text-ui-muted">
+                  <div className="flex items-center justify-between gap-4 text-sm text-muted-foreground">
                     <span>House Zero response</span>
                     <span>Demo</span>
                   </div>
                   <p className="mt-8 text-xl font-medium">{item.response}</p>
-                  <div className="mt-5 h-2 bg-ui-soft">
+                  <div className="mt-5 h-2 bg-background">
                     <div className="h-full bg-primary" style={{ width: `${62 + index * 9}%` }} />
                   </div>
                 </div>
@@ -100,24 +100,24 @@ export function Directory() {
             <article
               data-ui
               key={title}
-              className={`min-h-[24rem] w-[82vw] shrink-0 snap-center p-6 text-ui-foreground sm:w-[28rem] ${index === 0 ? "bg-ui" : "bg-ui-soft"}`}
+              className={`min-h-[24rem] w-[82vw] shrink-0 snap-center p-6 text-foreground sm:w-[28rem] ${index === 0 ? "bg-surface" : "bg-background"}`}
             >
-              <div className="flex items-center justify-between text-sm text-ui-muted">
+              <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>{title}</span>
                 <span>{index === 0 ? "Active" : "Ready"}</span>
               </div>
-              <div className="mt-12 bg-ui-strong p-5 text-ui-inverse">
+              <div className="mt-12 bg-foreground p-5 text-background">
                 <div className="flex gap-2">
                   <span className="h-10 flex-1 bg-primary" />
-                  <span className="h-10 flex-1 bg-ui-muted" />
-                  <span className="h-10 flex-1 bg-ui-muted" />
+                  <span className="h-10 flex-1 bg-muted-foreground" />
+                  <span className="h-10 flex-1 bg-muted-foreground" />
                 </div>
-                <div className="mt-3 h-28 bg-ui-foreground p-4 text-sm text-ui-inverse/70">
+                <div className="mt-3 h-28 bg-foreground p-4 text-sm text-background/70">
                   {index === 0 ? "Model → Tool → Evaluator" : "Experiment state available"}
                 </div>
               </div>
               <h3 className="mt-8 text-2xl font-medium">{title}</h3>
-              <p className="mt-3 leading-7 text-ui-muted">{text}</p>
+              <p className="mt-3 leading-7 text-muted-foreground">{text}</p>
             </article>
           ))}
         </div>
@@ -130,12 +130,12 @@ export function Directory() {
           </h2>
           <div data-ui className="overflow-x-auto lg:col-span-8">
             <div className="min-w-[42rem] text-base">
-              <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-ui-strong px-5 py-4 font-medium text-ui-inverse">
+              <div className="grid grid-cols-[1.2fr_1fr_1fr] bg-foreground px-5 py-4 font-medium text-background">
                 <span>Capability</span><span>Single output</span><span>House Zero</span>
               </div>
               {comparison.map((row, index) => (
-                <div key={row[0]} className={`grid grid-cols-[1.2fr_1fr_1fr] px-5 py-5 ${index % 2 ? "bg-ui-soft" : "bg-ui"}`}>
-                  <strong className="font-medium">{row[0]}</strong><span className="text-ui-muted">{row[1]}</span><span>{row[2]}</span>
+                <div key={row[0]} className={`grid grid-cols-[1.2fr_1fr_1fr] px-5 py-5 ${index % 2 ? "bg-background" : "bg-surface"}`}>
+                  <strong className="font-medium">{row[0]}</strong><span className="text-muted-foreground">{row[1]}</span><span>{row[2]}</span>
                 </div>
               ))}
             </div>
@@ -165,20 +165,20 @@ export function Directory() {
 
 function SystemMap() {
   return (
-    <div data-ui className="bg-ui p-5 text-ui-foreground lg:col-span-7 lg:col-start-6 sm:p-8">
-      <div className="flex items-center justify-between text-sm text-ui-muted"><span>Research harness</span><span>Demo system</span></div>
+    <div data-ui className="bg-surface p-5 text-foreground lg:col-span-7 lg:col-start-6 sm:p-8">
+      <div className="flex items-center justify-between text-sm text-muted-foreground"><span>Research harness</span><span>Demo system</span></div>
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
         {[
           ["Task", "Research brief"], ["Context", "12 sources"], ["Model", "Clairic 7B"],
           ["Tools", "Search + index"], ["Memory", "Project scope"], ["Evaluator", "Citation check"],
         ].map(([label, value], index) => (
-          <div key={label} className={`min-h-28 p-4 ${index === 2 || index === 5 ? "bg-primary text-primary-foreground" : "bg-ui-soft"}`}>
+          <div key={label} className={`min-h-28 p-4 ${index === 2 || index === 5 ? "bg-primary text-primary-foreground" : "bg-background"}`}>
             <span className="block text-sm opacity-70">{label}</span>
             <strong className="mt-5 block font-medium">{value}</strong>
           </div>
         ))}
       </div>
-      <p className="mt-5 bg-ui-strong p-4 text-ui-inverse">The evaluation returns evidence to the next version of the system.</p>
+      <p className="mt-5 bg-foreground p-4 text-background">The evaluation returns evidence to the next version of the system.</p>
     </div>
   );
 }

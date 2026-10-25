@@ -15,23 +15,23 @@ export function Footer() {
           </div>
           <form
             data-ui
-            className="bg-ui p-6 text-ui-foreground sm:p-8 lg:col-span-5 lg:col-start-8"
+            className="bg-surface p-6 text-foreground sm:p-8 lg:col-span-5 lg:col-start-8"
             onSubmit={(event) => { event.preventDefault(); setNotice("Demo only — account creation is not connected yet."); }}
           >
             <h3 className="text-2xl font-medium">Create an experiment</h3>
             <label className="mt-8 block text-sm font-medium">Experiment name
-              <input className="mt-2 min-h-12 w-full border border-ui-line bg-ui px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" value={name} onChange={(event) => setName(event.target.value)} />
+              <input className="mt-2 min-h-12 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" value={name} onChange={(event) => setName(event.target.value)} />
             </label>
             <fieldset className="mt-6">
               <legend className="text-sm font-medium">Visibility</legend>
-              <div className="mt-2 grid grid-cols-2 bg-ui-soft p-1">
+              <div className="mt-2 grid grid-cols-2 bg-background p-1">
                 {(["Private", "Public"] as const).map((option) => (
-                  <button key={option} type="button" onClick={() => setVisibility(option)} className={`min-h-11 px-3 ${visibility === option ? "bg-ui-strong text-ui-inverse" : "text-ui-muted"}`}>{option}</button>
+                  <button key={option} type="button" onClick={() => setVisibility(option)} className={`min-h-11 px-3 ${visibility === option ? "bg-foreground text-background" : "text-muted-foreground"}`}>{option}</button>
                 ))}
               </div>
             </fieldset>
-            <button type="submit" className="mt-7 min-h-13 w-full bg-primary px-5 font-medium text-primary-foreground transition-colors hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">Create experiment</button>
-            <p className="mt-4 min-h-6 text-sm text-ui-muted" aria-live="polite">{notice || "No account will be created from this demo."}</p>
+            <button type="submit" className="mt-7 min-h-13 w-full bg-primary px-5 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">Create experiment</button>
+            <p className="mt-4 min-h-6 text-sm text-muted-foreground" aria-live="polite">{notice || "No account will be created from this demo."}</p>
           </form>
         </div>
       </section>
