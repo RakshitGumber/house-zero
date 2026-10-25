@@ -5,13 +5,12 @@
   --font-heading: "Raleway Variable", "Helvetica Neue", Arial, sans-serif;
 
   --color-background: #edf6f9;
-  --color-foreground: #0a0a0a;
+  --color-foreground: oklch(26% 0.025 165);
   --color-surface: #ffffff;
-  --color-muted-foreground: #5c5852;
+  --color-muted-foreground: #435052;
   --color-primary: oklch(77.7% 0.152 181.912);
   --color-primary-dark: oklch(51.1% 0.096 186.391);
   --color-primary-light: oklch(91% 0.096 180.426);
-  --color-primary-foreground: oklch(28% 0.025 165);
 }
 
 @layer base {
@@ -35,6 +34,6 @@
   }
 
   ::selection {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-primary/50;
   }
 }
