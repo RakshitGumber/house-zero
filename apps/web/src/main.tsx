@@ -1,6 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "@tanstack/react-router";
+import "@fontsource-variable/raleway";
+import "@fontsource/lato/400.css";
+import "@fontsource/lato/700.css";
 
 import "@/index.css";
 import { router } from "@/router";
