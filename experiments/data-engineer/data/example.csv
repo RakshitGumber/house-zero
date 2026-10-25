@@ -1,0 +1,11 @@
+text,label
+"Remove extra spaces from this CSV",data_cleaning
+"Standardize all dates to YYYY-MM-DD",data_cleaning
+"Normalize inconsistent country names",data_cleaning
+"Find duplicate customer records",duplicate_detection
+"Identify repeated email addresses",duplicate_detection
+"Find rows with duplicate transaction IDs",duplicate_detection
+"Summarize this research article",summarization
+"Give me the main points of this report",summarization
+"Create a new folder for these reports",file_management
+"Move the invoices into the finance folder",file_management
