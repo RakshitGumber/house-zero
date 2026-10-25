@@ -1,3 +1,5 @@
+import { HouseZeroLogo } from "../brand/HouseZeroLogo";
+
 export function Navbar() {
   return (
     <header className="relative z-50 bg-background" id="top">
@@ -6,9 +8,7 @@ export function Navbar() {
         className="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8"
       >
         <a href="#top" className="group flex items-center gap-3 text-lg font-medium tracking-[-0.025em]">
-          <span className="grid size-9 place-items-center bg-foreground text-sm font-medium text-background transition-colors group-hover:bg-primary">
-            H0
-          </span>
+          <HouseZeroLogo className="size-10 shrink-0" />
           <span>House Zero</span>
         </a>
 
