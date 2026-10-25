@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
+import { RevealSection } from "@/components/motion/RevealSection";
 
 const measures = {
   Quality: { value: "87%", note: "Task completion across 24 demo runs", bars: [76, 87, 82, 91, 87] },
@@ -9,12 +12,13 @@ const measures = {
 };
 
 export function Deployment() {
+  const reducedMotion = useReducedMotion();
   const [active, setActive] = useState<keyof typeof measures>("Quality");
   const selected = measures[active];
 
   return (
     <>
-      <section id="scale" className="reveal bg-primary px-4 py-28 text-primary-foreground sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection id="scale" className="bg-primary px-4 py-28 text-primary-foreground sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-14 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-4">
             <h2 className="max-w-[11ch] text-[clamp(2.8rem,5.4vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.05em]">
@@ -29,7 +33,7 @@ export function Deployment() {
                   key={measure}
                   type="button"
                   onClick={() => setActive(measure)}
-                  className={`min-h-11 px-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${active === measure ? "bg-foreground text-background" : "bg-primary-dark text-white hover:bg-foreground hover:text-background"}`}
+                  className={`min-h-11 cursor-pointer px-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${active === measure ? "bg-foreground text-background" : "bg-primary-dark text-white hover:bg-foreground hover:text-background"}`}
                 >
                   {measure}
                 </button>
@@ -45,15 +49,22 @@ export function Deployment() {
             </div>
             <div className="mt-10 grid h-52 grid-cols-5 items-end gap-3 bg-background p-5">
               {selected.bars.map((height, index) => (
-                <div key={`${active}-${index}`} className="metric-bar bg-primary" style={{ height: `${height}%` }} />
+                <motion.div
+                  key={`${active}-${index}`}
+                  className="origin-bottom bg-primary"
+                  initial={reducedMotion ? false : { opacity: 0.45, scaleY: 0.2 }}
+                  animate={{ opacity: 1, scaleY: 1 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ height: `${height}%` }}
+                />
               ))}
             </div>
             <div className="mt-4 flex justify-between text-sm text-muted-foreground"><span>Version A</span><span>Version E</span></div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="reveal px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection className="px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-4 lg:col-start-2">
             <h2 className="text-[clamp(2.6rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em]">Shared research</h2>
@@ -72,7 +83,7 @@ export function Deployment() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
       <section className="bg-foreground px-4 py-28 text-background sm:px-6 lg:px-8 lg:py-32">
         <p className="mx-auto max-w-[54rem] text-[clamp(1.5rem,2.5vw,2.25rem)] leading-[1.2] tracking-[-0.025em]">
@@ -80,7 +91,7 @@ export function Deployment() {
         </p>
       </section>
 
-      <section id="questions" className="reveal px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection id="questions" className="px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-12">
           <h2 className="text-[clamp(2.8rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em] lg:col-span-4">Questions</h2>
           <div className="space-y-3 lg:col-span-7 lg:col-start-6">
@@ -90,7 +101,7 @@ export function Deployment() {
             <Question question="Can I test public work?">Yes. Public artifacts are designed to be inspected, run, evaluated, and forked with their setup and limitations attached.</Question>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </>
   );
 }
@@ -101,7 +112,7 @@ function Question({ question, children }: { question: string; children: string }
       <summary className="flex min-h-18 cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 text-xl font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
         {question}<span className="text-2xl font-normal group-open:rotate-45" aria-hidden="true">+</span>
       </summary>
-      <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 group-open:grid-rows-[1fr]"><div className="overflow-hidden"><p className="max-w-[52ch] px-5 pb-6 text-lg leading-8">{children}</p></div></div>
+      <div className="grid grid-rows-[0fr] group-open:grid-rows-[1fr]"><div className="overflow-hidden"><p className="max-w-[52ch] px-5 pb-6 text-lg leading-8">{children}</p></div></div>
     </details>
   );
 }

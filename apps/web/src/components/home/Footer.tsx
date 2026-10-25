@@ -7,7 +7,7 @@ export function Footer() {
 
   return (
     <>
-      <section id="create" className="stage-cut bg-primary px-4 py-24 text-primary-foreground sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+      <section id="create" className="bg-primary px-4 py-24 text-primary-foreground [clip-path:polygon(2.5rem_0,100%_0,100%_100%,0_100%,0_2.5rem)] sm:px-6 sm:py-32 sm:[clip-path:polygon(4rem_0,100%_0,100%_100%,0_100%,0_4rem)] lg:px-8 lg:py-40">
         <div className="grid gap-16 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-5">
             <h2 className="max-w-[9ch] text-[clamp(3.3rem,7vw,7.5rem)] font-medium leading-[0.88] tracking-[-0.055em]">Start with a question</h2>
@@ -26,11 +26,11 @@ export function Footer() {
               <legend className="text-sm font-medium">Visibility</legend>
               <div className="mt-2 grid grid-cols-2 bg-background p-1">
                 {(["Private", "Public"] as const).map((option) => (
-                  <button key={option} type="button" onClick={() => setVisibility(option)} className={`min-h-11 px-3 ${visibility === option ? "bg-foreground text-background" : "text-muted-foreground"}`}>{option}</button>
+                  <button key={option} type="button" onClick={() => setVisibility(option)} className={`min-h-11 cursor-pointer px-3 ${visibility === option ? "bg-foreground text-background" : "text-muted-foreground"}`}>{option}</button>
                 ))}
               </div>
             </fieldset>
-            <button type="submit" className="mt-7 min-h-13 w-full bg-primary px-5 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">Create experiment</button>
+            <button type="submit" className="mt-7 min-h-13 w-full cursor-pointer bg-primary px-5 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground">Create experiment</button>
             <p className="mt-4 min-h-6 text-sm text-muted-foreground" aria-live="polite">{notice || "No account will be created from this demo."}</p>
           </form>
         </div>

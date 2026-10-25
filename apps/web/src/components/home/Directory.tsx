@@ -1,3 +1,5 @@
+import { RevealSection } from "@/components/motion/RevealSection";
+
 const workflow = [
   {
     title: "Compose the harness",
@@ -41,7 +43,7 @@ const comparison = [
 export function Directory() {
   return (
     <>
-      <section id="product" className="reveal px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection id="product" className="px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-14 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-4 lg:col-start-2">
             <h2 className="text-[clamp(2.6rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em]">
@@ -53,9 +55,9 @@ export function Directory() {
           </div>
           <SystemMap />
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="reveal bg-surface px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection className="bg-surface px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="mx-auto max-w-[76rem]">
           <h2 className="text-[clamp(2.6rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em]">
             From question to proof
@@ -84,9 +86,9 @@ export function Directory() {
             ))}
           </div>
         </div>
-      </section>
+      </RevealSection>
 
-      <section id="experiments" className="reveal overflow-hidden bg-foreground py-28 text-background lg:py-32">
+      <RevealSection id="experiments" className="overflow-hidden bg-foreground py-28 text-background lg:py-32">
         <div className="px-4 sm:px-6 lg:px-8">
           <h2 className="max-w-[12ch] text-[clamp(2.8rem,5.5vw,5.5rem)] font-medium leading-[0.92] tracking-[-0.045em]">
             Inside the lab
@@ -95,7 +97,7 @@ export function Directory() {
             Build, train, inspect, compare, and publish without breaking the chain of evidence.
           </p>
         </div>
-        <div className="hide-scrollbar mt-16 flex snap-x gap-5 overflow-x-auto px-4 pb-4 sm:px-6 lg:px-8">
+        <div className="mt-16 flex snap-x gap-5 overflow-x-auto px-4 pb-4 [scrollbar-color:var(--color-primary)_transparent] [scrollbar-width:thin] sm:px-6 lg:px-8">
           {capabilities.map(([title, text], index) => (
             <article
               data-ui
@@ -121,9 +123,9 @@ export function Directory() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="reveal px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+      <RevealSection className="px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-12">
           <h2 className="max-w-[10ch] text-[clamp(2.6rem,5vw,5rem)] font-medium leading-[0.94] tracking-[-0.045em] lg:col-span-4">
             What travels with the result
@@ -141,11 +143,11 @@ export function Directory() {
             </div>
           </div>
         </div>
-      </section>
+      </RevealSection>
 
-      <section className="reveal bg-surface px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
-        <div className="artifact-board grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          <div className="stage-cut min-h-64 bg-primary p-7 text-primary-foreground md:col-span-2">
+      <RevealSection className="bg-surface px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
+        <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+          <div className="min-h-64 bg-primary p-7 text-primary-foreground [clip-path:polygon(2.5rem_0,100%_0,100%_100%,0_100%,0_2.5rem)] sm:[clip-path:polygon(4rem_0,100%_0,100%_100%,0_100%,0_4rem)] md:col-span-2">
             <h2 className="max-w-[10ch] text-[clamp(2.8rem,5vw,5rem)] font-medium leading-[0.92] tracking-[-0.045em]">
               The open floor
             </h2>
@@ -158,7 +160,7 @@ export function Directory() {
             <a className="mt-16 inline-block underline underline-offset-4" href="#create">Publish an experiment</a>
           </div>
         </div>
-      </section>
+      </RevealSection>
     </>
   );
 }

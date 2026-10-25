@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const models = ["Clairic 7B", "JEV Reasoning", "Clef Compact"];
 const tools = ["Web retrieval", "Document index", "Code runner"];
 const evaluators = ["Citation integrity", "Task completion", "Tool reliability"];
 
 export function Hero() {
+  const reducedMotion = useReducedMotion();
   const [model, setModel] = useState(models[0]!);
   const [tool, setTool] = useState(tools[0]!);
   const [evaluator, setEvaluator] = useState(evaluators[0]!);
@@ -33,7 +35,12 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="stage-cut hero-shutter relative -mx-4 mt-20 min-h-[35rem] bg-primary px-4 py-10 sm:-mx-6 sm:px-6 lg:absolute lg:bottom-0 lg:left-[38%] lg:right-0 lg:mt-0 lg:min-h-[58%] lg:px-14 lg:py-14">
+        <motion.div
+          className="relative -mx-4 mt-20 min-h-[35rem] origin-bottom-right bg-primary px-4 py-10 [clip-path:polygon(2.5rem_0,100%_0,100%_100%,0_100%,0_2.5rem)] sm:-mx-6 sm:px-6 sm:[clip-path:polygon(4rem_0,100%_0,100%_100%,0_100%,0_4rem)] lg:absolute lg:bottom-0 lg:left-[38%] lg:right-0 lg:mt-0 lg:min-h-[58%] lg:px-14 lg:py-14"
+          initial={reducedMotion ? false : { opacity: 0.55, scale: 1.035, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: reducedMotion ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}
+        >
           <div
             data-ui
             aria-label="Interactive demo experiment composer"
@@ -52,7 +59,7 @@ export function Hero() {
                 <label className="block text-sm font-medium">
                   Model
                   <select
-                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full cursor-pointer border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={model}
                     onChange={(event) => { setModel(event.target.value); setHasRun(false); }}
                   >
@@ -62,7 +69,7 @@ export function Hero() {
                 <label className="block text-sm font-medium">
                   Tool
                   <select
-                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full cursor-pointer border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={tool}
                     onChange={(event) => { setTool(event.target.value); setHasRun(false); }}
                   >
@@ -72,7 +79,7 @@ export function Hero() {
                 <label className="block text-sm font-medium">
                   Evaluation
                   <select
-                    className="mt-2 min-h-11 w-full border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+                    className="mt-2 min-h-11 w-full cursor-pointer border border-muted-foreground/30 bg-surface px-3 outline-none focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                     value={evaluator}
                     onChange={(event) => { setEvaluator(event.target.value); setHasRun(false); }}
                   >
@@ -82,7 +89,7 @@ export function Hero() {
                 <button
                   type="button"
                   onClick={() => setHasRun(true)}
-                  className="min-h-11 w-full bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
+                  className="min-h-11 w-full cursor-pointer bg-primary px-4 font-medium text-primary-foreground transition-colors hover:bg-primary-dark hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
                 >
                   {hasRun ? "Run again" : "Run demo"}
                 </button>
@@ -91,7 +98,7 @@ export function Hero() {
               <div className="p-4 sm:p-6" aria-live="polite">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="text-lg font-medium">Execution trace</h2>
-                  <span className={`text-sm ${hasRun ? "text-pass" : "text-muted-foreground"}`}>
+                  <span className={`text-sm ${hasRun ? "text-primary-dark" : "text-muted-foreground"}`}>
                     {hasRun ? "Evaluation passed" : "Ready to run"}
                   </span>
                 </div>
@@ -109,7 +116,7 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
     </main>
   );
