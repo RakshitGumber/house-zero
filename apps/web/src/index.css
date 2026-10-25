@@ -6,7 +6,8 @@
 
   --color-background: #edf6f9;
   --color-foreground: oklch(26% 0.025 165);
-  --color-surface: #ffffff;
+  --color-surface: oklch(98.4% 0.019 200.873);
+  --color-border: oklch(55.4% 0.046 257.417);
   --color-muted-foreground: #435052;
   --color-primary: oklch(77.7% 0.152 181.912);
   --color-primary-dark: oklch(51.1% 0.096 186.391);
@@ -16,7 +17,7 @@
 @layer base {
   html {
     @apply scroll-smooth bg-background motion-reduce:scroll-auto;
-    scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: stable;
   }
 
   body {
